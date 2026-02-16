@@ -25,10 +25,9 @@ from . import ${proto_name}_pb2_grpc as ${module_name}_grpc
 from . import ${config['restricted_proto']}_pb2 as restricted_grpc_types
 from . import ${config['restricted_proto']}_pb2_grpc as restricted_grpc
 % endif
+from . import nidevice_pb2 as grpc_complex_types  # noqa: F401
 from . import session_pb2 as session_grpc_types
-from . import nidevice_pb2 as grpc_complex_types
-% for c in config['custom_types']:
-
+% for c in sorted(config['custom_types'], key=lambda item: item['file_name']):
 from . import ${c['file_name']} as ${c['file_name']}  # noqa: F401
 % endfor
 
@@ -100,7 +99,7 @@ class GrpcStubInterpreter(object):
 f = functions[func_name]
 grpc_types_var = 'restricted_grpc_types' if f.get('grpc_type') == 'restricted' else 'grpc_types'
 grpc_client_var = 'restricted_grpc' if f.get('grpc_type') == 'restricted' else module_name + '_grpc'
-%>
+%>\
 <%include file="${'/_grpc_stub_interpreter.py' + method_template['library_interpreter_filename'] + '.py.mako'}" args="f=f, config=config, method_template=method_template, grpc_types_var=grpc_types_var, grpc_client_var=grpc_client_var" />\
 % endif
 % endfor

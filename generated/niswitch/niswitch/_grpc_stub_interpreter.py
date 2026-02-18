@@ -10,7 +10,6 @@ from . import enums as enums  # noqa: F401
 from . import errors as errors
 from . import niswitch_pb2 as grpc_types
 from . import niswitch_pb2_grpc as niswitch_grpc
-from . import nidevice_pb2 as grpc_complex_types  # noqa: F401
 from . import session_pb2 as session_grpc_types
 
 

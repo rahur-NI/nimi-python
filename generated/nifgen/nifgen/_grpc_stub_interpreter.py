@@ -11,7 +11,6 @@ from . import errors as errors
 from . import nifgen_pb2 as grpc_types
 from . import nifgen_pb2_grpc as nifgen_grpc
 from . import session_pb2 as session_grpc_types
-from . import nidevice_pb2 as grpc_complex_types
 
 
 class GrpcStubInterpreter(object):

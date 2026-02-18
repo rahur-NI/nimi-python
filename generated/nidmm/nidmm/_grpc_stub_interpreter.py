@@ -11,7 +11,6 @@ from . import errors as errors
 from . import nidmm_pb2 as grpc_types
 from . import nidmm_pb2_grpc as nidmm_grpc
 from . import session_pb2 as session_grpc_types
-from . import nidevice_pb2 as grpc_complex_types
 
 
 class GrpcStubInterpreter(object):

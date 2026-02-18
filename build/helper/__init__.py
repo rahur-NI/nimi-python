@@ -43,6 +43,7 @@ from build.helper.helper import sorted_attrs  # noqa: F401
 from build.helper.metadata_add_all import add_all_metadata  # noqa: F401
 
 from build.helper.metadata_filters import are_complex_parameters_used  # noqa: F401
+from build.helper.metadata_filters import are_grpc_complex_types_used  # noqa: F401
 from build.helper.metadata_filters import filter_codegen_attributes  # noqa: F401
 from build.helper.metadata_filters import filter_codegen_attributes_public_only  # noqa: F401
 from build.helper.metadata_filters import filter_codegen_enums  # noqa: F401

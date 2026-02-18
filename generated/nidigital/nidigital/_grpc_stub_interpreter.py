@@ -11,7 +11,7 @@ from . import errors as errors
 from . import nidigitalpattern_pb2 as grpc_types
 from . import nidigitalpattern_pb2_grpc as nidigital_grpc
 from . import session_pb2 as session_grpc_types
-from . import nidevice_pb2 as grpc_complex_types
+
 from . import history_ram_cycle_information as history_ram_cycle_information  # noqa: F401
 
 

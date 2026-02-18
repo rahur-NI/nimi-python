@@ -8,6 +8,7 @@ module_name = config['module_name']
 proto_name = config.get('proto_name', module_name)
 service_class_prefix = config['grpc_service_class_prefix']
 functions = helper.filter_codegen_functions(config['functions'])
+are_grpc_complex_types_used = helper.are_grpc_complex_types_used(functions)
 %>\
 
 import grpc
@@ -25,9 +26,14 @@ from . import ${proto_name}_pb2_grpc as ${module_name}_grpc
 from . import ${config['restricted_proto']}_pb2 as restricted_grpc_types
 from . import ${config['restricted_proto']}_pb2_grpc as restricted_grpc
 % endif
+% if are_grpc_complex_types_used:
 from . import nidevice_pb2 as grpc_complex_types  # noqa: F401
+% endif
 from . import session_pb2 as session_grpc_types
-% for c in sorted(config['custom_types'], key=lambda item: item['file_name']):
+% if config['custom_types']:
+
+% endif
+% for c in config['custom_types']:
 from . import ${c['file_name']} as ${c['file_name']}  # noqa: F401
 % endfor
 

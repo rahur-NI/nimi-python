@@ -499,3 +499,14 @@ def are_complex_parameters_used(functions):
             are_complex_parameters_used = True
             break
     return are_complex_parameters_used
+
+
+def are_grpc_complex_types_used(functions):
+    '''Returns bool based on whether any gRPC methods use nidevice complex message types.'''
+    grpc_complex_original_types = {'NIComplexNumber[]', 'NIComplexNumberF32[]', 'NIComplexI16[]'}
+    for _, function_metadata in functions.items():
+        numpy_parameters = filter_parameters(function_metadata['parameters'], ParameterUsageOptions.NUMPY_PARAMETERS)
+        for parameter in numpy_parameters:
+            if parameter.get('complex_type') is not None and parameter.get('original_type') in grpc_complex_original_types:
+                return True
+    return False

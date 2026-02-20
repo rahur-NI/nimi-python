@@ -14,7 +14,7 @@
     included_in_proto = f.get('included_in_proto', True)
     numpy_complex_params = [
         p for p in helper.filter_parameters(parameters, helper.ParameterUsageOptions.NUMPY_PARAMETERS)
-        if p['complex_type'] is not None and p.get('original_type') in ('NIComplexNumber[]', 'NIComplexNumberF32[]', 'NIComplexI16[]')
+        if p.get('complex_array_representation') is not None and p.get('original_type') in ('NIComplexNumber[]', 'NIComplexNumberF32[]', 'NIComplexI16[]')
     ]
     # For numpy complex inputs, create NIComplex message lists and map them in the request args
     client = 'self._restricted_client' if grpc_client_var == 'restricted_grpc' else 'self._client'

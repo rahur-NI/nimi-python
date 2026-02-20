@@ -507,6 +507,6 @@ def are_grpc_complex_types_used(functions):
     for _, function_metadata in functions.items():
         numpy_parameters = filter_parameters(function_metadata['parameters'], ParameterUsageOptions.NUMPY_PARAMETERS)
         for parameter in numpy_parameters:
-            if parameter.get('complex_type') is not None and parameter.get('original_type') in grpc_complex_original_types:
+            if parameter.get('complex_array_representation') is not None and parameter.get('original_type') in grpc_complex_original_types:
                 return True
     return False

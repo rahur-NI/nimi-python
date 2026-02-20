@@ -33,7 +33,7 @@ from . import session_pb2 as session_grpc_types
 % if config['custom_types']:
 
 % endif
-% for c in config['custom_types']:
+% for c in sorted(config['custom_types'], key=lambda custom_type: custom_type['file_name']):
 from . import ${c['file_name']} as ${c['file_name']}  # noqa: F401
 % endfor
 

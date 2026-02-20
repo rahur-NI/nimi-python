@@ -192,9 +192,10 @@ def get_library_interpreter_method_return_snippet(parameters, config, use_numpy_
     return ('return ' + ', '.join(snippets)).strip()
 
 
-def get_grpc_interpreter_method_return_snippet(parameters, config):
+def get_grpc_interpreter_method_return_snippet(parameters, config, use_numpy_array=False):
     '''Returns a string suitable to use as the return argument of a _gprc.LibraryInterpreter method'''
-    parameters_to_use = filter_parameters(parameters, ParameterUsageOptions.API_OUTPUT_PARAMETERS)
+    options = ParameterUsageOptions.API_NUMPY_OUTPUT_PARAMETERS if use_numpy_array else ParameterUsageOptions.API_OUTPUT_PARAMETERS
+    parameters_to_use = filter_parameters(parameters, options)
     snippets = [_get_grpc_interpreter_output_param_return_snippet(p, parameters, config) for p in parameters_to_use]
     return ('return ' + ', '.join(snippets)).strip()
 

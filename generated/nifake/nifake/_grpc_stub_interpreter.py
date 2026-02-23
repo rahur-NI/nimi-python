@@ -10,13 +10,12 @@ from . import enums as enums  # noqa: F401
 from . import errors as errors
 from . import nifake_pb2 as grpc_types
 from . import nifake_pb2_grpc as nifake_grpc
+from . import nidevice_pb2 as grpc_complex_types  # noqa: F401
 from . import session_pb2 as session_grpc_types
 
 from . import custom_struct as custom_struct  # noqa: F401
-
-from . import custom_struct_typedef as custom_struct_typedef  # noqa: F401
-
 from . import custom_struct_nested_typedef as custom_struct_nested_typedef  # noqa: F401
+from . import custom_struct_typedef as custom_struct_typedef  # noqa: F401
 
 
 class GrpcStubInterpreter(object):

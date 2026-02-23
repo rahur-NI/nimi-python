@@ -474,7 +474,6 @@ class LibraryInterpreter(object):
         errors.handle_error(self, error_code, ignore_warnings=False, is_error_handling=False)
         self._close_on_exit = True
         return int(vi_ctype.value)
-
     def initialize_with_independent_channels(self, resource_name, reset, option_string):  # noqa: N802
         resource_name_ctype = ctypes.create_string_buffer(resource_name.encode(self._encoding))  # case C020
         reset_ctype = _visatype.ViBoolean(reset)  # case S150
@@ -484,7 +483,6 @@ class LibraryInterpreter(object):
         errors.handle_error(self, error_code, ignore_warnings=False, is_error_handling=False)
         self._close_on_exit = True
         return int(vi_ctype.value)
-
     def initiate_with_channels(self, channel_name):  # noqa: N802
         vi_ctype = _visatype.ViSession(self._vi)  # case S110
         channel_name_ctype = ctypes.create_string_buffer(channel_name.encode(self._encoding))  # case C010

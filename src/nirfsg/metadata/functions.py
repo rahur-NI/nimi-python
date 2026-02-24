@@ -1055,6 +1055,10 @@ functions = {
                 },
                 'name': 'sparameterTable',
                 'numpy': True,
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sparameterTableSize'
+                },
                 'type': 'NIComplexNumber[]',
                 'use_in_python_api': True
             },
@@ -1393,110 +1397,6 @@ functions = {
                 'use_in_python_api': True
             }
         ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
-    'FancyCreateDeembeddingSparameterTableArray': {
-        'codegen_method': 'python-only',
-        'documentation': {
-            'description': '\nCreates an s-parameter de-embedding table for the port from the input data.\n\nIf you only create one table for a port, NI-RFSG automatically selects that table to de-embed the measurement.\n\n**Supported Devices** : PXIe-5830/5831/5832/5840/5841/5842/5860\n\n**Related Topics**\n\n`De-embedding Overview<https://www.ni.com/docs/en-US/bundle/pxie-5840/page/de-embedding-overview.html>`_'
-        },
-        'included_in_proto': True,
-        'method_name_for_documentation': 'create_deembedding_sparameter_table_array',
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'library_interpreter_filename': 'none',
-                'method_python_name_suffix': '',
-                'session_filename': 'create_deembedding_sparameter_table_array'
-            }
-        ],
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies your instrument session. The ViSession handle is obtained from the nirfsg_Init function or the nirfsg_InitWithOptions function and identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession',
-                'use_array': False,
-                'use_in_python_api': True
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the name of the port. The only valid value for the PXIe-5840/5841/5842/5860 is "" (empty string).'
-                },
-                'name': 'port',
-                'type': 'ViConstString',
-                'use_array': False,
-                'use_in_python_api': True
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the name of the table. The name must be unique for a given port, but not across ports. If you use the same name as an existing table, the table is replaced.'
-                },
-                'name': 'tableName',
-                'type': 'ViConstString',
-                'use_array': False,
-                'use_in_python_api': True
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the frequencies for the NIRFSG_ATTR_SPARAMETER_TABLE rows. Frequencies must be unique and in ascending order.'
-                },
-                'name': 'frequencies',
-                'numpy': True,
-                'type': 'ViReal64[]',
-                'type_in_documentation': 'numpy.array(dtype=numpy.float64)',
-                'use_in_python_api': True
-            },
-            {
-                'array_dimensions': 3,
-                'complex_array_representation': 'complex_number_array',
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the S-parameters for each frequency. S-parameters for each frequency are placed in the array in the following order: s11, s12, s21, s22.'
-                },
-                'name': 'sparameterTable',
-                'numpy': True,
-                'type': 'NIComplexNumber[]',
-                'type_in_documentation': 'numpy.array(dtype=numpy.complex128)',
-                'use_in_python_api': True
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the orientation of the input data relative to the port on the DUT port.\n\n**Defined Values** :',
-                    'table_body': [
-                        [
-                            'NIRFSG_VAL_PORT1_TOWARDS_DUT',
-                            '24000 (0x5dc0)',
-                            'Port 1 of the S2P is oriented towards the DUT port.'
-                        ],
-                        [
-                            'NIRFSG_VAL_PORT2_TOWARDS_DUT',
-                            '24001 (0x5dc1)',
-                            'Port 2 of the S2P is oriented towards the DUT port.'
-                        ]
-                    ],
-                    'table_header': [
-                        'Name',
-                        'Value',
-                        'Description'
-                    ]
-                },
-                'enum': 'SparameterOrientation',
-                'grpc_enum': None,
-                'name': 'sparameterOrientation',
-                'type': 'ViInt32',
-                'use_array': False,
-                'use_in_python_api': True
-            }
-        ],
-        'python_name': 'create_deembedding_sparameter_table_array',
         'returns': 'ViStatus',
         'use_session_lock': False
     },

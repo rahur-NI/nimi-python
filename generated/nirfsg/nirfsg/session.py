@@ -6167,7 +6167,7 @@ class Session(_SessionBase):
         self._interpreter.configure_software_start_trigger()
 
     @ivi_synchronized
-    def _create_deembedding_sparameter_table_array(self, port, table_name, frequencies, sparameter_table, sparameter_table_size, number_of_ports, sparameter_orientation):
+    def _create_deembedding_sparameter_table_array(self, port, table_name, frequencies, sparameter_table, number_of_ports, sparameter_orientation):
         r'''_create_deembedding_sparameter_table_array
 
         Creates an s-parameter de-embedding table for the port from the input data.
@@ -6225,7 +6225,7 @@ class Session(_SessionBase):
             raise TypeError('sparameter_table must be numpy.ndarray of dtype=complex128, is ' + str(sparameter_table.dtype))
         if sparameter_table.ndim != 3:
             raise TypeError('sparameter_table must be numpy.ndarray of dimension=3, is ' + str(sparameter_table.ndim))
-        self._interpreter.create_deembedding_sparameter_table_array(port, table_name, frequencies, sparameter_table, sparameter_table_size, number_of_ports, sparameter_orientation)
+        self._interpreter.create_deembedding_sparameter_table_array(port, table_name, frequencies, sparameter_table, number_of_ports, sparameter_orientation)
 
     @ivi_synchronized
     def create_deembedding_sparameter_table_s2p_file(self, port, table_name, s2p_file_path, sparameter_orientation):
@@ -6306,60 +6306,6 @@ class Session(_SessionBase):
         `Start Trigger <https://www.ni.com/docs/en-US/bundle/rfsg/page/rfsg/start_triggers.html>`_
         '''
         self._interpreter.disable_start_trigger()
-
-    def create_deembedding_sparameter_table_array(self, port, table_name, frequencies, sparameter_table, sparameter_orientation):
-        '''create_deembedding_sparameter_table_array
-
-        Creates an s-parameter de-embedding table for the port from the input data.
-
-        If you only create one table for a port, NI-RFSG automatically selects that table to de-embed the measurement.
-
-        **Supported Devices** : PXIe-5830/5831/5832/5840/5841/5842/5860
-
-        **Related Topics**
-
-        `De-embedding Overview<https://www.ni.com/docs/en-US/bundle/pxie-5840/page/de-embedding-overview.html>`_
-
-        Args:
-            port (str): Specifies the name of the port. The only valid value for the PXIe-5840/5841/5842/5860 is "" (empty string).
-
-            table_name (str): Specifies the name of the table. The name must be unique for a given port, but not across ports. If you use the same name as an existing table, the table is replaced.
-
-            frequencies (numpy.array(dtype=numpy.float64)): Specifies the frequencies for the SPARAMETER_TABLE rows. Frequencies must be unique and in ascending order.
-
-                Note:
-                One or more of the referenced properties are not in the Python API for this driver.
-
-            sparameter_table (numpy.array(dtype=numpy.complex128)): Specifies the S-parameters for each frequency. S-parameters for each frequency are placed in the array in the following order: s11, s12, s21, s22.
-
-            sparameter_orientation (enums.SparameterOrientation): Specifies the orientation of the input data relative to the port on the DUT port.
-
-                **Defined Values** :
-
-                +-----------------------------------------+----------------+-----------------------------------------------------+
-                | Name                                    | Value          | Description                                         |
-                +=========================================+================+=====================================================+
-                | SparameterOrientation.PORT1_TOWARDS_DUT | 24000 (0x5dc0) | Port 1 of the S2P is oriented towards the DUT port. |
-                +-----------------------------------------+----------------+-----------------------------------------------------+
-                | SparameterOrientation.PORT2_TOWARDS_DUT | 24001 (0x5dc1) | Port 2 of the S2P is oriented towards the DUT port. |
-                +-----------------------------------------+----------------+-----------------------------------------------------+
-
-        '''
-        if (str(type(sparameter_table)).find("'numpy.ndarray'") != -1) or (str(type(frequencies)).find("'numpy.ndarray'") != -1):
-            if sparameter_table.ndim == 3:
-                if frequencies.size == sparameter_table.shape[0]:
-                    if sparameter_table.shape[1] == sparameter_table.shape[2]:
-                        number_of_ports = sparameter_table.shape[1]
-                        sparameter_table_size = sparameter_table.size
-                        return self._create_deembedding_sparameter_table_array(port, table_name, frequencies, sparameter_table, sparameter_table_size, number_of_ports, sparameter_orientation)
-                    else:
-                        raise ValueError("Row and column count of sparameter table should be equal. Table row count is {} and column count is {}.".format(sparameter_table.shape[1], sparameter_table.shape[2]))
-                else:
-                    raise ValueError("Frequencies count does not match the sparameter table count. Frequencies count is {} and sparameter table count is {}.".format(frequencies.size, sparameter_table.shape[0]))
-            else:
-                raise ValueError("Unsupported array dimension. Is {}, expected 3".format(sparameter_table.ndim))
-        else:
-            raise TypeError("Unsupported datatype. Expected numpy array.")
 
     def get_deembedding_sparameters(self):
         '''get_deembedding_sparameters

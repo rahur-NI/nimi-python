@@ -6407,6 +6407,12 @@ class Session(_SessionBase):
         Args:
             sparameters (numpy.array(dtype=numpy.complex128)): Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
 
+
+        Returns:
+            number_of_sparameters (int): Returns the number of S-parameters.
+
+            number_of_ports (int): Returns the number of S-parameter ports. The **sparameter** array is always *n* x *n*, where span *n* is the number of ports.
+
         '''
         sparameters = self._interpreter.get_deembedding_sparameters()
         return sparameters

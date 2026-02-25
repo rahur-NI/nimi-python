@@ -2035,6 +2035,7 @@ functions = {
                 'name': 'sparameters',
                 'numpy': True,
                 'type': 'NIComplexNumber[]',
+                'type_in_documentation': 'numpy.array(dtype=numpy.complex128)',
                 'use_array': False,
                 'use_in_python_api': True
             },
@@ -2056,7 +2057,7 @@ functions = {
                 'name': 'numberOfSparameters',
                 'type': 'ViInt32',
                 'use_array': False,
-                'use_in_python_api': False
+                'use_in_python_api': True
             },
             {
                 'direction': 'out',
@@ -2066,7 +2067,7 @@ functions = {
                 'name': 'numberOfPorts',
                 'type': 'ViInt32',
                 'use_array': False,
-                'use_in_python_api': False
+                'use_in_python_api': True
             }
         ],
         'python_name': 'get_deembedding_sparameters',

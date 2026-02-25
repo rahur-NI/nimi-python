@@ -1244,11 +1244,30 @@ get_deembedding_sparameters
 
             :type sparameters_array_size: int
 
-            :rtype: list of NIComplexNumber
-            :return:
+            :rtype: tuple (sparameters, number_of_sparameters, number_of_ports)
+
+                WHERE
+
+                sparameters (numpy.array(dtype=numpy.complex128)): 
 
 
                     Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
+
+                    
+
+
+                number_of_sparameters (int): 
+
+
+                    Returns the number of S-parameters.
+
+                    
+
+
+                number_of_ports (int): 
+
+
+                    Returns the number of S-parameter ports. The **sparameter** array is always *n* x *n*, where span *n* is the number of ports.
 
                     
 

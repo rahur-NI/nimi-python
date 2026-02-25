@@ -6410,6 +6410,7 @@ class Session(_SessionBase):
         '''
         sparameters = self._interpreter.get_deembedding_sparameters()
         return sparameters
+
     @ivi_synchronized
     def _get_deembedding_table_number_of_ports(self):
         r'''_get_deembedding_table_number_of_ports

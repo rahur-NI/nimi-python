@@ -1703,6 +1703,7 @@
 - Added
   - Python 3.14 Support
 - Changed
+  - Updated `get_deembedding_sparameters` to return the deembedding S-parameter matrix without requiring a size argument
 - Removed
 
 #### [nirfsg] 1.0.1 - 2026-01-09

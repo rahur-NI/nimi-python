@@ -1216,60 +1216,29 @@ get_deembedding_sparameters
 
     .. py:currentmodule:: nirfsg.Session
 
-    .. py:method:: get_deembedding_sparameters(sparameters_array_size)
-
-            Returns the S-parameters used for de-embedding a measurement on the selected port.
-
-            This includes interpolation of the parameters based on the configured carrier frequency. This method returns an empty array if no de-embedding is done.
-
-            If you want to call this method just to get the required buffer size, you can pass 0 for **S-parameter Size** and VI_NULL for the **S-parameters** buffer.
-
-            **Supported Devices** : PXIe-5830/5831/5832/5840/5841/5842/5860
-
-            
-
-            .. note:: The port orientation for the returned S-parameters is normalized to :py:data:`~nirfsg.SparameterOrientation.PORT1_TOWARDS_DUT`.
+    .. py:method:: get_deembedding_sparameters()
 
 
+        Returns the S-parameters used for de-embedding a measurement on the selected port.
 
-            :param sparameters_array_size:
+        This includes interpolation of the parameters based on the configured carrier frequency. This method returns an empty array if no de-embedding is done.
+
+        If you want to call this method just to get the required buffer size, you can pass 0 for **S-parameter Size** and VI_NULL for the **S-parameters** buffer.
+
+        **Supported Devices** : PXIe-5830/5831/5832/5840/5841/5842/5860
+
+        
+
+        .. note:: The port orientation for the returned S-parameters is normalized to :py:data:`~nirfsg.SparameterOrientation.PORT1_TOWARDS_DUT`.
 
 
-                Specifies the size of the array that is returned by the :py:attr:`nirfsg.Session.SPARAMETERS` output.
+        :rtype: numpy.array(dtype=numpy.complex128)
+        :return:
+
+
+                Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
 
                 
-
-                .. note:: One or more of the referenced properties are not in the Python API for this driver.
-
-
-            :type sparameters_array_size: int
-
-            :rtype: tuple (sparameters, number_of_sparameters, number_of_ports)
-
-                WHERE
-
-                sparameters (numpy.array(dtype=numpy.complex128)): 
-
-
-                    Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
-
-                    
-
-
-                number_of_sparameters (int): 
-
-
-                    Returns the number of S-parameters.
-
-                    
-
-
-                number_of_ports (int): 
-
-
-                    Returns the number of S-parameter ports. The **sparameter** array is always *n* x *n*, where span *n* is the number of ports.
-
-                    
 
 
 

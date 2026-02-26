@@ -2008,7 +2008,7 @@ functions = {
         'method_name_for_documentation': 'get_deembedding_sparameters',
         'method_templates': [
             {
-                'documentation_filename': 'default_method',
+                'documentation_filename': 'get_deembedding_sparameter',
                 'library_interpreter_filename': 'get_deembedding_sparameter',
                 'method_python_name_suffix': '',
                 'session_filename': 'get_deembedding_sparameter'

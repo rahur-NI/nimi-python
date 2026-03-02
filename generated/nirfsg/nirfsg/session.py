@@ -6361,6 +6361,26 @@ class Session(_SessionBase):
         else:
             raise TypeError("Unsupported datatype. Expected numpy array.")
 
+    def get_deembedding_sparameters(self):
+        '''get_deembedding_sparameters
+
+        Returns the S-parameters used for de-embedding a measurement on the selected port.
+
+        This includes interpolation of the parameters based on the configured carrier frequency. This method returns an empty array if no de-embedding is done.
+
+        If you want to call this method just to get the required buffer size, you can pass 0 for **S-parameter Size** and VI_NULL for the **S-parameters** buffer.
+
+        **Supported Devices** : PXIe-5830/5831/5832/5840/5841/5842/5860
+
+        Note: The port orientation for the returned S-parameters is normalized to SparameterOrientation.PORT1_TOWARDS_DUT.
+
+        Args:
+            sparameters (numpy.array(dtype=numpy.complex128)): Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
+
+        '''
+        sparameters = self._interpreter.get_deembedding_sparameters()
+        return sparameters
+
     @ivi_synchronized
     def get_all_named_waveform_names(self):
         r'''get_all_named_waveform_names
@@ -6391,8 +6411,8 @@ class Session(_SessionBase):
         script_names = self._interpreter.get_all_script_names()
         return _converters.convert_comma_separated_string_to_list(script_names)
 
-    def get_deembedding_sparameters(self):
-        '''get_deembedding_sparameters
+    def _get_deembedding_sparameters(self):
+        r'''_get_deembedding_sparameters
 
         Returns the S-parameters used for de-embedding a measurement on the selected port.
 
@@ -6404,31 +6424,12 @@ class Session(_SessionBase):
 
         Note: The port orientation for the returned S-parameters is normalized to SparameterOrientation.PORT1_TOWARDS_DUT.
 
-        Args:
-            sparameters (numpy.array(dtype=numpy.complex128)): Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
-
-
         Returns:
-            number_of_sparameters (int): Returns the number of S-parameters.
-
-            number_of_ports (int): Returns the number of S-parameter ports. The **sparameter** array is always *n* x *n*, where span *n* is the number of ports.
+            sparameters (numpy.array(dtype=numpy.complex128)): Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
 
         '''
         sparameters = self._interpreter.get_deembedding_sparameters()
         return sparameters
-
-    @ivi_synchronized
-    def _get_deembedding_table_number_of_ports(self):
-        r'''_get_deembedding_table_number_of_ports
-
-        Returns the number of S-parameter ports.
-
-        Returns:
-            number_of_ports (int): Returns the number of S-parameter ports. The **sparameter** array is always *n* x *n*, where span *n* is the number of ports.
-
-        '''
-        number_of_ports = self._interpreter.get_deembedding_table_number_of_ports()
-        return number_of_ports
 
     @ivi_synchronized
     def _get_external_calibration_last_date_and_time(self):

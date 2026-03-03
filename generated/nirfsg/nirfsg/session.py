@@ -6411,8 +6411,8 @@ class Session(_SessionBase):
         script_names = self._interpreter.get_all_script_names()
         return _converters.convert_comma_separated_string_to_list(script_names)
 
-    def _get_deembedding_sparameters(self):
-        r'''_get_deembedding_sparameters
+    def get_deembedding_sparameters(self):
+        r'''get_deembedding_sparameters
 
         Returns the S-parameters used for de-embedding a measurement on the selected port.
 

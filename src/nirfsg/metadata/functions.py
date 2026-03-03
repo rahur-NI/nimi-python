@@ -2105,7 +2105,6 @@ functions = {
                 'use_in_python_api': False
             }
         ],
-        'python_name': '_get_deembedding_sparameters',
         'returns': 'ViStatus',
         'use_session_lock': False
     },

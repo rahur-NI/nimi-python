@@ -8,6 +8,7 @@ module_name = config['module_name']
 proto_name = config.get('proto_name', module_name)
 service_class_prefix = config['grpc_service_class_prefix']
 functions = helper.filter_codegen_functions(config['functions'])
+are_grpc_complex_types_used = helper.are_grpc_complex_types_used(functions)
 %>\
 
 import grpc
@@ -21,9 +22,14 @@ from . import enums as enums  # noqa: F401
 from . import errors as errors
 from . import ${proto_name}_pb2 as grpc_types
 from . import ${proto_name}_pb2_grpc as ${module_name}_grpc
+% if are_grpc_complex_types_used:
+from . import nidevice_pb2 as grpc_complex_types  # noqa: F401
+% endif
 from . import session_pb2 as session_grpc_types
-% for c in config['custom_types']:
+% if config['custom_types']:
 
+% endif
+% for c in sorted(config['custom_types'], key=lambda custom_type: custom_type['file_name']):
 from . import ${c['file_name']} as ${c['file_name']}  # noqa: F401
 % endfor
 
@@ -87,6 +93,8 @@ class GrpcStubInterpreter(object):
 % for func_name in sorted(functions):
 % for method_template in functions[func_name]['method_templates']:
 % if method_template['library_interpreter_filename'] != '/none':
+<%
+%>\
 <%include file="${'/_grpc_stub_interpreter.py' + method_template['library_interpreter_filename'] + '.py.mako'}" args="f=functions[func_name], config=config, method_template=method_template" />\
 % endif
 % endfor

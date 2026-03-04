@@ -179,7 +179,7 @@ class GrpcStubInterpreter(object):
 
     def create_waveform_f64_numpy(self, channel_name, waveform_data_array):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def create_waveform_from_file_f64(self, channel_name, file_name, byte_order):  # noqa: N802
         response = self._invoke(
             self._client.CreateWaveformFromFileF64,
@@ -196,7 +196,7 @@ class GrpcStubInterpreter(object):
 
     def create_waveform_i16_numpy(self, channel_name, waveform_data_array):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def define_user_standard_waveform(self, channel_name, waveform_data_array):  # noqa: N802
         self._invoke(
             self._client.DefineUserStandardWaveform,
@@ -467,7 +467,7 @@ class GrpcStubInterpreter(object):
 
     def write_binary16_waveform_numpy(self, channel_name, waveform_handle, data):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def write_named_waveform_f64(self, channel_name, waveform_name, data):  # noqa: N802
         self._invoke(
             self._client.WriteNamedWaveformF64,
@@ -476,10 +476,10 @@ class GrpcStubInterpreter(object):
 
     def write_named_waveform_f64_numpy(self, channel_name, waveform_name, data):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def write_named_waveform_i16_numpy(self, channel_name, waveform_name, data):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def write_script(self, channel_name, script):  # noqa: N802
         self._invoke(
             self._client.WriteScript,
@@ -494,7 +494,7 @@ class GrpcStubInterpreter(object):
 
     def write_waveform_numpy(self, channel_name, waveform_handle, data):  # noqa: N802
         raise NotImplementedError('numpy-specific methods are not supported over gRPC')
-
+\
     def close(self):  # noqa: N802
         self._invoke(
             self._client.Close,

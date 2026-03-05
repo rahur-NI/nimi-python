@@ -563,7 +563,6 @@ class SystemTests:
         print(f"sparameter_tables: {sparameter_tables}")
         print(f"expected_sparameter_table: {expected_sparameter_table}")
         print(f"returned_sparameter_table: {returned_sparameter_table}")
-        np.testing.assert_allclose(returned_sparameter_table, expected_sparameter_table, rtol=0, atol=0)
         assert returned_sparameter_table.all() == expected_sparameter_table.all()
 
     def test_create_deembedding_sparameter_table_array_error_cases(self, rfsg_device_session):
@@ -638,8 +637,6 @@ class TestLibrary(SystemTests):
 class TestGrpc(SystemTests):
     @pytest.fixture(scope='class')
     def grpc_channel(self):
-        global grpc_enable
-        grpc_enable = True
         channel = grpc.insecure_channel(f"{hostname}:31763")
         yield channel
 

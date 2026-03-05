@@ -15,12 +15,9 @@ import system_test_utilities  # noqa: E402
 
 # Set up global information we need
 test_files_base_dir = os.path.join(os.path.dirname(__file__))
-use_simulated_session = False
-real_hw_resource_name = '5841'
-grpc_enable = False
-hostname = "sg-debug1.ni.systems"  # <-- set your server IP or hostname
-username = "rfuser"               # <-- set your SSH username
-password = "rfRocks"               # <-- set your SSH password
+use_simulated_session = True
+real_hw_resource_name = '5841sim'
+hostname = "localhost" 
 
 def get_test_file_path(file_name):
     return os.path.join(test_files_base_dir, file_name)
@@ -57,12 +54,21 @@ class SystemTests:
         model = rfsg_device_session.instrument_model
         assert model == "NI PXIe-5841"
 
+    def test_get_list_of_strings_attribute(self, rfsg_device_session):
+        models = rfsg_device_session.supported_instrument_models
+        assert isinstance(models, list) and all(isinstance(model, str) for model in models)
+        assert "NI PXIe-5841" in models
+
     def test_set_string_attribute(self, rfsg_device_session):
         rfsg_device_session.selected_script = "myScript"
         assert rfsg_device_session.selected_script == "myScript"
 
-    def test_get_int32_attribute(self, rfsg_device_session):
+    def test_get_timedelta_attribute(self, rfsg_device_session):
         value = rfsg_device_session.external_calibration_recommended_interval
+        assert isinstance(value, hightime.timedelta)
+
+    def test_get_int32_attribute(self, rfsg_device_session):
+        value = rfsg_device_session.arb_waveform_quantum
         assert isinstance(value, int)
 
     def test_set_int32_enum_attribute(self, rfsg_device_session):
@@ -122,6 +128,10 @@ class SystemTests:
         waveform_exists = rfsg_device_session.check_if_waveform_exists('mywaveform')
         assert waveform_exists is False
 
+    def test_self_test(self, rfsg_device_session):
+        # We should not get an assert if self_test passes
+        rfsg_device_session.self_test()
+
     @pytest.mark.skipif(use_simulated_session is False, reason="Takes long time in real device")
     def test_self_cal(self, rfsg_device_session):
         rfsg_device_session.self_cal()
@@ -135,13 +145,13 @@ class SystemTests:
         rfsg_device_session.clear_self_calibrate_range()
 
     @pytest.mark.skipif(use_simulated_session is True, reason="Bad date returned by driver for simulated device")
-    def test_get_external_calibration_last_date_and_time(self, rfsg_device_session):
-        dt = rfsg_device_session.get_external_calibration_last_date_and_time()
+    def test_get_ext_cal_last_date_and_time(self, rfsg_device_session):
+        dt = rfsg_device_session.get_ext_cal_last_date_and_time()
         assert isinstance(dt, hightime.datetime)
 
     @pytest.mark.skipif(use_simulated_session is True, reason="Bad date returned by driver for simulated device")
-    def test_get_self_calibration_last_date_and_time(self, rfsg_device_session):
-        dt = rfsg_device_session.get_self_calibration_last_date_and_time(nirfsg.Module.PRIMARY_MODULE)
+    def test_get_self_cal_last_date_and_time(self, rfsg_device_session):
+        dt = rfsg_device_session.get_self_cal_last_date_and_time(nirfsg.Module.PRIMARY_MODULE)
         assert isinstance(dt, hightime.datetime)
 
     def test_get_terminal_name(self, rfsg_device_session):
@@ -182,7 +192,7 @@ class SystemTests:
         assert simulated_5831_device_session.ports['if1'].deembedding_type == requested_deembedding_type
 
     def test_los_rep_cap(self, simulated_5831_device_session):
-        requested_lo_source = "SG_SA_Shared"
+        requested_lo_source = nirfsg.LoSource.SG_SA_SHARED
         simulated_5831_device_session.los[2].lo_source = requested_lo_source
         assert simulated_5831_device_session.los[2].lo_source == requested_lo_source
 
@@ -380,41 +390,18 @@ class SystemTests:
     def test_save_load_configuration(self, rfsg_device_session):
         rfsg_device_session.configure_rf(2e9, -5.0)
         rfsg_device_session.iq_rate = 1e6
-        config_path = get_test_file_path('tempConfiguration.json')
-        rfsg_device_session.save_configurations_to_file(config_path)
-        if not grpc_enable or hostname == "localhost":
-            assert os.path.exists(config_path)
-        else:
-            import paramiko
-            # Use Windows CMD shell command for file existence check
-            remote_path = config_path.replace('/', '\\')
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname, username=username, password=password)
-            # CMD shell: if exist "path" (echo exists) else (echo missing)
-            stdin, stdout, stderr = ssh.exec_command(f'if exist "{remote_path}" (echo exists) else (echo missing)')
-            result = stdout.read().decode().strip()
-            ssh.close()
-            assert result == "exists", f"File not found on server: {remote_path}"
+        rfsg_device_session.save_configurations_to_file(get_test_file_path('tempConfiguration.json'))
+        assert os.path.exists(get_test_file_path('tempConfiguration.json'))
         rfsg_device_session.configure_rf(3e9, -15.0)
         rfsg_device_session.iq_rate = 2e6
         assert rfsg_device_session.frequency == 3e9
         assert rfsg_device_session.power_level == -15.0
         assert rfsg_device_session.iq_rate == 2e6
-        rfsg_device_session.load_configurations_from_file(config_path)
+        rfsg_device_session.load_configurations_from_file(get_test_file_path('tempConfiguration.json'))
         assert rfsg_device_session.frequency == 2e9
         assert rfsg_device_session.power_level == -5.0
         assert rfsg_device_session.iq_rate == 1e6
-        if grpc_enable and hostname != "localhost":
-            # Remove the file from the server via SSH
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname, username=username, password=password)
-            # CMD shell: del "path"
-            ssh.exec_command(f'del /f /q "{remote_path}"')
-            ssh.close()
-        if os.path.exists(config_path):
-            os.remove(config_path)
+        os.remove(get_test_file_path('tempConfiguration.json'))
 
 # Basic tests for generation
     @pytest.mark.skipif(use_simulated_session is False, reason="Test executed with status check in real hw")
@@ -538,8 +525,8 @@ class SystemTests:
         rfsg_device_session.configure_software_start_trigger()
         rfsg_device_session.script_triggers[0].configure_software_script_trigger()
         with rfsg_device_session.initiate():
-            rfsg_device_session.send_software_edge_trigger(nirfsg.SoftwareTriggerType.START, '')
-            rfsg_device_session.send_software_edge_trigger(nirfsg.SoftwareTriggerType.SCRIPT, 'scriptTrigger0')
+            rfsg_device_session.send_software_edge_trigger(nirfsg.SoftwareTriggerType.START, nirfsg.TriggerIdentifier.NONE)
+            rfsg_device_session.send_software_edge_trigger(nirfsg.SoftwareTriggerType.SCRIPT, nirfsg.TriggerIdentifier.SCRIPT_TRIGGER0)
 
     @pytest.mark.skipif(sys.platform == "linux", reason="Function not supported on Linux OS")
     def test_create_deembedding_sparameter_table_s2p_file(self, rfsg_device_session):
@@ -577,6 +564,7 @@ class SystemTests:
         print(f"expected_sparameter_table: {expected_sparameter_table}")
         print(f"returned_sparameter_table: {returned_sparameter_table}")
         np.testing.assert_allclose(returned_sparameter_table, expected_sparameter_table, rtol=0, atol=0)
+        assert returned_sparameter_table.all() == expected_sparameter_table.all()
 
     def test_create_deembedding_sparameter_table_array_error_cases(self, rfsg_device_session):
         frequencies = np.array([1e9, 2e9, 3e9], dtype=np.float64)
@@ -608,7 +596,38 @@ class SystemTests:
     def test_wait_until_settled(self, rfsg_device_session):
         rfsg_device_session.configure_rf(2e9, -5.0)
         with rfsg_device_session.initiate():
-            rfsg_device_session.wait_until_settled(15000)
+            rfsg_device_session.wait_until_settled()
+
+    def test_get_all_named_waveform_names(self, rfsg_device_session):
+        rfsg_device_session.generation_mode = nirfsg.GenerationMode.ARB_WAVEFORM
+        waveform_data1 = np.full(1000, 1 + 0j, dtype=np.complex128)
+        waveform_data2 = np.full(800, 1 + 0j, dtype=np.complex128)
+        rfsg_device_session.write_arb_waveform('waveform1', waveform_data1, False)
+        rfsg_device_session.write_arb_waveform('waveform2', waveform_data2, False)
+        names = rfsg_device_session.get_all_named_waveform_names()
+        assert 'waveform1' in names
+        assert 'waveform2' in names
+
+    @pytest.mark.skipif(use_simulated_session is True, reason="Scripts not compiled on simulated device")
+    def test_get_all_script_names(self, rfsg_device_session):
+        rfsg_device_session.generation_mode = nirfsg.GenerationMode.SCRIPT
+        waveform_data = np.full(1000, 0.707 + 0.707j, dtype=np.complex64)
+        rfsg_device_session.write_arb_waveform('mywaveform', waveform_data, False)
+        script1 = '''script myScript1
+        repeat forever
+        generate mywaveform
+        end repeat
+        end script'''
+        script2 = '''script myScript2
+        repeat forever
+        generate mywaveform
+        end repeat
+        end script'''
+        rfsg_device_session.write_script(script1)
+        rfsg_device_session.write_script(script2)
+        script_names = rfsg_device_session.get_all_script_names()
+        assert 'myScript1' in script_names
+        assert 'myScript2' in script_names
 
 
 class TestLibrary(SystemTests):

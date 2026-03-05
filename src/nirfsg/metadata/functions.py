@@ -4220,7 +4220,6 @@ functions = {
                     'note': 'Some values may not be valid. The allowed values depend on the current settings of the instrument session.'
                 },
                 'grpc_enum': 'NiRFSGReal64AttributeValues',
-                'grpc_name': 'value_raw',
                 'name': 'value',
                 'type': 'ViReal64',
                 'use_array': False,

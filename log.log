@@ -32,7 +32,7 @@ collecting ... collected 1 item
 
 build/helper/documentation_helper.py::build.helper.documentation_helper.as_rest_table PASSED [100%]
 
-============================== 1 passed in 0.34s ===============================
+============================== 1 passed in 0.33s ===============================
 py312-build_test: commands[5]> coverage run --append --rcfile=tools/coverage_unit_tests.rc --source build.helper -m pytest build/unit_tests -s
 ============================= test session starts ==============================
 platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /home/rahur/nimi-python-rahur/nimi-python/.tox/64/py312-build_test/bin/python
@@ -143,7 +143,7 @@ build/unit_tests/test_metadata_merge_dicts.py::test_merge_dict_with_regex PASSED
 build/unit_tests/test_metadata_merge_dicts.py::test_merge_dict_with_regex_off PASSED
 build/unit_tests/test_metadata_merge_dicts.py::test_merge_dict_top_level_key_missing PASSED
 
-============================== 98 passed in 0.53s ==============================
+============================== 98 passed in 0.52s ==============================
 py312-build_test: commands[6]> coverage report
 Name                                      Stmts   Miss  Cover
 -------------------------------------------------------------
@@ -164,10 +164,7 @@ Wrote XML report to codegen.xml
 py312-build_test: commands[8]> coverage html --directory=generated/htmlcov/unit_tests/codegen
 Wrote HTML report to generated/htmlcov/unit_tests/codegen/index.html
 py312-build_test: commands[9]> flake8 --config=./tox.ini '--per-file-ignores=build/unit_tests/*.py:F403,F405' build/
-build/helper/codegen_helper.py:580:66: W292 no newline at end of file
-    return ("'{}'" if type(value) is str else "{}").format(value)                                                                 ^
-py312-build_test: exit 1 (0.36 seconds) /home/rahur/nimi-python-rahur/nimi-python> flake8 --config=./tox.ini '--per-file-ignores=build/unit_tests/*.py:F403,F405' build/ pid=323089
-py312-build_test: FAIL ✖ in 3.42 seconds
+py312-build_test: OK ✔ in 3.05 seconds
 py312-codegen: commands[0]> python --version
 Python 3.12.3
 py312-codegen: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -862,7 +859,7 @@ Making nitclk
 
 Making Global Files
   Creating Root: README.rst
-py312-codegen: OK ✔ in 46.34 seconds
+py312-codegen: OK ✔ in 46.97 seconds
 py312-installers: commands[0]> python --version
 Python 3.12.3
 py312-installers: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -903,7 +900,7 @@ Creating sdist and wheel: generated/nimodinst/dist
 
 Making nitclk installers
 Creating sdist and wheel: generated/nitclk/dist
-py312-installers: OK ✔ in 25.63 seconds
+py312-installers: OK ✔ in 33.51 seconds
 py312-flake8: commands[0]> python --version
 Python 3.12.3
 py312-flake8: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -959,8 +956,8 @@ generated/nirfsg/nirfsg/_grpc_stub_interpreter.py:308:5: E301 expected 1 blank l
 generated/nirfsg/nirfsg/_grpc_stub_interpreter.py:568:9: F401 'numpy as np' imported but unused
         import numpy as np
         ^
-py312-flake8: exit 1 (1.19 seconds) /home/rahur/nimi-python-rahur/nimi-python> flake8 --config=./tox.ini generated/ pid=328084
-py312-flake8: FAIL ✖ in 1.82 seconds
+py312-flake8: exit 1 (1.24 seconds) /home/rahur/nimi-python-rahur/nimi-python> flake8 --config=./tox.ini generated/ pid=400446
+py312-flake8: FAIL ✖ in 2.04 seconds
 py312-docs: commands[0] /home/rahur/nimi-python-rahur/nimi-python/docs> python --version
 Python 3.12.3
 py312-docs: commands[1] /home/rahur/nimi-python-rahur/nimi-python/docs> python -c 'import platform; print(platform.architecture())'
@@ -1457,11 +1454,11 @@ dumping object inventory... done
 build succeeded.
 
 The HTML pages are in ../generated/docs/nitclk/html.
-py312-docs: OK ✔ in 16.44 seconds
+py312-docs: OK ✔ in 17.01 seconds
 py310-test: skipped because could not find python interpreter with spec(s): py310
-py310-test: SKIP ⚠ in 0.44 seconds
+py310-test: SKIP ⚠ in 2.52 seconds
 py311-test: skipped because could not find python interpreter with spec(s): py311
-py311-test: SKIP ⚠ in 0.24 seconds
+py311-test: SKIP ⚠ in 0.41 seconds
 py312-test: commands[0]> python --version
 Python 3.12.3
 py312-test: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -1787,7 +1784,7 @@ PASSED
 generated/nifake/nifake/unit_tests/test_session.py::test_dunder_version Version = 1.4.10.dev0
 PASSED
 
-============================= 272 passed in 9.49s ==============================
+============================= 272 passed in 9.94s ==============================
 py312-test: commands[5]> coverage report
 Name                                                      Stmts   Miss  Cover
 -----------------------------------------------------------------------------
@@ -1827,7 +1824,7 @@ generated/nidcpower/nidcpower/unit_tests/test_nidcpower.py::test_lcr_load_compen
 generated/nidcpower/nidcpower/unit_tests/test_nidcpower.py::test_lcr_load_compensation_spot[python_init_params3-nidcpower.lcr_load_compensation_spot.LCRLoadCompensationSpot(frequency=500.0, reference_value_type=nidcpower.enums.LCRReferenceValueType.IDEAL_RESISTANCE, reference_value=7.0)-Frequency        : 500 Hz\nIdeal Resistance : 7 \u03a9\n-expected_ctype_members3] PASSED
 generated/nidcpower/nidcpower/unit_tests/test_nidcpower.py::test_lcr_load_compensation_spot_byte_packing_alignment PASSED
 
-============================== 7 passed in 0.60s ===============================
+============================== 7 passed in 0.58s ===============================
 py312-test: commands[9]> coverage report
 Name                                                          Stmts   Miss  Cover
 ---------------------------------------------------------------------------------
@@ -1857,7 +1854,7 @@ generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_fe
 generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_pin_state_enum_print PASSED
 generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_write_static_pin_state_enum_print PASSED
 
-============================== 8 passed in 0.68s ===============================
+============================== 8 passed in 0.71s ===============================
 py312-test: commands[13]> coverage report
 Name                                       Stmts   Miss  Cover
 --------------------------------------------------------------
@@ -1979,7 +1976,7 @@ Python:
         typing_extensions==4.15.0
 PASSED
 
-============================== 23 passed in 0.52s ==============================
+============================== 23 passed in 0.50s ==============================
 py312-test: commands[17]> coverage report
 Name                                       Stmts   Miss  Cover
 --------------------------------------------------------------
@@ -2002,7 +1999,7 @@ collecting ... collected 2 items
 generated/niscope/niscope/unit_tests/test_niscope.py::test_populate_samples_info PASSED
 generated/niscope/niscope/unit_tests/test_niscope.py::test_populate_channel_and_record_info PASSED
 
-============================== 2 passed in 0.57s ===============================
+============================== 2 passed in 0.54s ===============================
 py312-test: commands[21]> coverage report
 Name                                         Stmts   Miss  Cover
 ----------------------------------------------------------------
@@ -2059,9 +2056,9 @@ py312-test: commands[26]> coverage xml -o nitclkunittest.xml
 Wrote XML report to nitclkunittest.xml
 py312-test: commands[27]> coverage html --directory=generated/htmlcov/unit_tests/nitclk
 Wrote HTML report to generated/htmlcov/unit_tests/nitclk/index.html
-py312-test: OK ✔ in 18.39 seconds
+py312-test: OK ✔ in 18.64 seconds
 py313-test: skipped because could not find python interpreter with spec(s): py313
-py313-test: SKIP ⚠ in 0.26 seconds
+py313-test: SKIP ⚠ in 2.12 seconds
 py314-test: commands[0]> python --version
 Python 3.14.0
 py314-test: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -2387,7 +2384,7 @@ PASSED
 generated/nifake/nifake/unit_tests/test_session.py::test_dunder_version Version = 1.4.10.dev0
 PASSED
 
-============================= 272 passed in 6.21s ==============================
+============================= 272 passed in 6.46s ==============================
 py314-test: commands[5]> coverage report
 Name                                                      Stmts   Miss  Cover
 -----------------------------------------------------------------------------
@@ -2437,7 +2434,7 @@ generated/nidcpower/nidcpower/lcr_load_compensation_spot.py:10
     class struct_NILCRLoadCompensationSpot(ctypes.Structure):  # noqa N801
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================== 7 passed, 2 warnings in 0.35s =========================
+======================== 7 passed, 2 warnings in 0.36s =========================
 py314-test: commands[9]> coverage report
 Name                                                          Stmts   Miss  Cover
 ---------------------------------------------------------------------------------
@@ -2467,7 +2464,7 @@ generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_fe
 generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_pin_state_enum_print PASSED
 generated/nidigital/nidigital/unit_tests/test_nidigital.py::TestSession::test_write_static_pin_state_enum_print PASSED
 
-============================== 8 passed in 0.43s ===============================
+============================== 8 passed in 0.44s ===============================
 py314-test: commands[13]> coverage report
 Name                                       Stmts   Miss  Cover
 --------------------------------------------------------------
@@ -2589,7 +2586,7 @@ Python:
         typing_extensions==4.15.0
 PASSED
 
-============================== 23 passed in 0.23s ==============================
+============================== 23 passed in 0.25s ==============================
 py314-test: commands[17]> coverage report
 Name                                       Stmts   Miss  Cover
 --------------------------------------------------------------
@@ -2618,7 +2615,7 @@ generated/niscope/niscope/waveform_info.py:9
     class struct_niScope_wfmInfo(ctypes.Structure):  # noqa N801
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-========================= 2 passed, 1 warning in 0.32s =========================
+========================= 2 passed, 1 warning in 0.31s =========================
 py314-test: commands[21]> coverage report
 Name                                         Stmts   Miss  Cover
 ----------------------------------------------------------------
@@ -2675,7 +2672,7 @@ py314-test: commands[26]> coverage xml -o nitclkunittest.xml
 Wrote XML report to nitclkunittest.xml
 py314-test: commands[27]> coverage html --directory=generated/htmlcov/unit_tests/nitclk
 Wrote HTML report to generated/htmlcov/unit_tests/nitclk/index.html
-py314-test: OK ✔ in 14.9 seconds
+py314-test: OK ✔ in 16.62 seconds
 py312-pkg: commands[0]> python --version
 Python 3.12.3
 py312-pkg: commands[1]> python -c 'import platform; print(platform.architecture())'
@@ -2710,15 +2707,15 @@ Checking generated/nise/dist/nise-1.4.10.dev0.tar.gz: [32mPASSED[0m
 py312-pkg: commands[11]> python -m twine check 'generated/niswitch/dist/*'
 Checking generated/niswitch/dist/niswitch-1.4.10.dev0-py3-none-any.whl: [32mPASSED[0m
 Checking generated/niswitch/dist/niswitch-1.4.10.dev0.tar.gz: [32mPASSED[0m
-  py312-build_test: FAIL code 1 (3.42=setup[0.04]+cmd[0.01,0.05,0.71,0.12,0.72,0.83,0.13,0.14,0.31,0.36] seconds)
-  py312-codegen: OK (46.34=setup[0.01]+cmd[0.00,0.03,0.64,45.66] seconds)
-  py312-installers: OK (25.63=setup[0.01]+cmd[0.00,0.03,0.59,25.01] seconds)
-  py310-test: SKIP (0.44 seconds)
-  py311-test: SKIP (0.24 seconds)
-  py312-test: OK (18.39=setup[0.02]+cmd[0.00,0.03,0.65,0.29,11.27,0.12,0.12,0.27,0.91,0.06,0.06,0.09,1.01,0.09,0.11,0.18,0.81,0.07,0.07,0.08,0.86,0.07,0.07,0.08,0.77,0.07,0.07,0.09] seconds)
-  py313-test: SKIP (0.26 seconds)
-  py314-test: OK (14.90=setup[0.03]+cmd[0.00,0.03,0.64,0.29,8.47,0.13,0.13,0.16,0.78,0.08,0.08,0.08,0.94,0.10,0.11,0.15,0.63,0.07,0.07,0.07,0.71,0.07,0.07,0.08,0.70,0.08,0.08,0.08] seconds)
-  py312-flake8: FAIL code 1 (1.82=setup[0.01]+cmd[0.00,0.03,0.59,1.19] seconds)
-  py312-docs: OK (16.44=setup[0.02]+cmd[0.00,0.03,3.23,1.79,1.32,1.76,0.59,3.00,2.25,0.67,1.06,0.72] seconds)
-  py312-pkg: OK (2.24=setup[0.01]+cmd[0.00,0.03,0.17,0.21,0.23,0.23,0.22,0.22,0.22,0.24,0.22,0.24] seconds)
-  evaluation failed :( (130.16 seconds)
+  py312-build_test: OK (3.05=setup[0.03]+cmd[0.00,0.03,0.48,0.12,0.64,0.83,0.13,0.14,0.32,0.34] seconds)
+  py312-codegen: OK (46.97=setup[0.01]+cmd[0.00,0.03,0.49,46.44] seconds)
+  py312-installers: OK (33.51=setup[0.01]+cmd[0.00,0.03,0.66,32.81] seconds)
+  py310-test: SKIP (2.52 seconds)
+  py311-test: SKIP (0.41 seconds)
+  py312-test: OK (18.64=setup[0.02]+cmd[0.00,0.03,0.47,0.46,11.58,0.12,0.13,0.26,0.86,0.07,0.07,0.09,1.05,0.09,0.10,0.19,0.78,0.07,0.07,0.08,0.83,0.06,0.06,0.08,0.77,0.08,0.08,0.09] seconds)
+  py313-test: SKIP (2.12 seconds)
+  py314-test: OK (16.62=setup[0.02]+cmd[0.00,0.03,1.35,0.85,8.60,0.13,0.14,0.17,0.89,0.13,0.09,0.09,1.00,0.11,0.11,0.12,0.65,0.08,0.08,0.08,0.74,0.07,0.07,0.08,0.68,0.08,0.08,0.08] seconds)
+  py312-flake8: FAIL code 1 (2.04=setup[0.01]+cmd[0.00,0.03,0.76,1.24] seconds)
+  py312-docs: OK (17.01=setup[0.01]+cmd[0.00,0.03,3.12,1.82,1.40,1.85,0.65,3.16,2.31,0.75,1.17,0.74] seconds)
+  py312-pkg: OK (2.20=setup[0.01]+cmd[0.00,0.03,0.13,0.18,0.24,0.25,0.23,0.23,0.22,0.23,0.22,0.24] seconds)
+  evaluation failed :( (145.11 seconds)

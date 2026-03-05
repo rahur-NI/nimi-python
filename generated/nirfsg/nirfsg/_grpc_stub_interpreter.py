@@ -490,7 +490,7 @@ class GrpcStubInterpreter(object):
     def set_attribute_vi_int32(self, channel_name, attribute, value):  # noqa: N802
         self._invoke(
             self._client.SetAttributeViInt32,
-            grpc_types.SetAttributeViInt32Request(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value=value),
+            grpc_types.SetAttributeViInt32Request(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value_raw=value),
         )
 
     def set_attribute_vi_int64(self, channel_name, attribute, value):  # noqa: N802
@@ -502,7 +502,7 @@ class GrpcStubInterpreter(object):
     def set_attribute_vi_real64(self, channel_name, attribute, value):  # noqa: N802
         self._invoke(
             self._client.SetAttributeViReal64,
-            grpc_types.SetAttributeViReal64Request(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value=value),
+            grpc_types.SetAttributeViReal64Request(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value_raw=value),
         )
 
     def set_attribute_vi_session(self, channel_name, attribute):  # noqa: N802
@@ -514,7 +514,7 @@ class GrpcStubInterpreter(object):
     def set_attribute_vi_string(self, channel_name, attribute, value):  # noqa: N802
         self._invoke(
             self._client.SetAttributeViString,
-            grpc_types.SetAttributeViStringRequest(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value=value),
+            grpc_types.SetAttributeViStringRequest(vi=self._vi, channel_name=channel_name, attribute_id=attribute, value_raw=value),
         )
 
     def set_waveform_burst_start_locations(self, channel_name, locations):  # noqa: N802

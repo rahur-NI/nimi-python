@@ -6386,7 +6386,7 @@ class Session(_SessionBase):
             sparameters (numpy.array(dtype=numpy.complex128)): Returns an array of S-parameters. The S-parameters are returned in the following order: s11, s12, s21, s22.
 
         '''
-        sparameters = self._interpreter._get_deembedding_sparameters()
+        sparameters = self._interpreter.get_deembedding_sparameters()
         return sparameters
 
     @ivi_synchronized

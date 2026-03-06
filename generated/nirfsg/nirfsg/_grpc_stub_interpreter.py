@@ -295,13 +295,16 @@ class GrpcStubInterpreter(object):
             grpc_types.GetAttributeViStringRequest(vi=self._vi, channel_name=channel_name, attribute_id=attribute),
         )
         return response.value
-
-    def get_deembedding_sparameters(self, sparameters_array_size):  # noqa: N802
+    def _get_deembedding_sparameters(self):
+        import numpy as np
         response = self._invoke(
             self._client.GetDeembeddingSparameters,
-            grpc_types.GetDeembeddingSparametersRequest(vi=self._vi, sparameters_array_size=sparameters_array_size),
+            grpc_types.GetDeembeddingSparametersRequest(vi=self._vi),
         )
-        return [NIComplexNumber(x) for x in response.sparameters], response.number_of_sparameters, response.number_of_ports
+        number_of_ports = response.number_of_ports
+        sparameters = np.array([c.real + 1j * c.imaginary for c in response.sparameters], dtype=np.complex128)
+        sparameters = sparameters.reshape((number_of_ports, number_of_ports))
+        return sparameters
 
     def get_deembedding_table_number_of_ports(self):  # noqa: N802
         response = self._invoke(

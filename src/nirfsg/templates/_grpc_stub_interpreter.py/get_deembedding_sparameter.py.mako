@@ -1,23 +1,15 @@
 <%page args="f, config, method_template"/>\
 <%
-    '''Renders a GrpcStubInterpreter method for GetDeembeddingSparameters that returns a numpy array of complex numbers.'''
+    '''Creates a numpy array based on number of ports queried from driver and passes it to "get_deembedding_sparameters" method.'''
     import build.helper as helper
-    full_func_name = f['interpreter_name'] + method_template['method_python_name_suffix']
-    method_decl_params = helper.get_params_snippet(f, helper.ParameterUsageOptions.INTERPRETER_METHOD_DECLARATION)
-    grpc_name = f.get('grpc_name', f['name'])
-    grpc_request_args = helper.get_params_snippet(f, helper.ParameterUsageOptions.GRPC_REQUEST_PARAMETERS)
-    included_in_proto = f.get('included_in_proto', True)
 %>\
-
-    def ${full_func_name}(${method_decl_params}):  # noqa: N802
-% if included_in_proto:
-        import numpy
+    def ${f['python_name']}(self):
+        import numpy as np
         response = self._invoke(
-            self._client.${grpc_name},
-            grpc_types.${grpc_name}Request(${grpc_request_args}),
+            self._client.GetDeembeddingSparameters,
+            grpc_types.GetDeembeddingSparametersRequest(vi=self._vi),
         )
-        sparameters_array = numpy.array([c.real + 1j * c.imaginary for c in response.sparameters], dtype=numpy.complex128)
-        return sparameters_array, response.number_of_sparameters, response.number_of_ports
-% else:
-        raise NotImplementedError('${full_func_name} is not supported over gRPC')
-% endif
+        number_of_ports = response.number_of_ports
+        sparameters = np.array([c.real + 1j * c.imaginary for c in response.sparameters], dtype=np.complex128)
+        sparameters = sparameters.reshape((number_of_ports, number_of_ports))
+        return sparameters

@@ -6370,7 +6370,7 @@ class Session(_SessionBase):
             raise TypeError("Unsupported datatype. Expected numpy array.")
 
     def get_deembedding_sparameters(self):
-        '''get_deembedding_sparameters
+        r'''get_deembedding_sparameters
 
         Returns the S-parameters used for de-embedding a measurement on the selected port.
 

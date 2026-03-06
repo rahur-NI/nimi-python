@@ -3,7 +3,7 @@
     '''Creates a numpy array based on number of ports queried from driver and passes it to "get_deembedding_sparameters" method.'''
     import build.helper as helper
 %>\
-    def ${f['python_name']}(self):
+    def ${f['interpreter_name']}(self):
         import numpy as np
         response = self._invoke(
             self._client.GetDeembeddingSparameters,

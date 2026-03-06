@@ -295,7 +295,7 @@ class GrpcStubInterpreter(object):
             grpc_types.GetAttributeViStringRequest(vi=self._vi, channel_name=channel_name, attribute_id=attribute),
         )
         return response.value
-    def _get_deembedding_sparameters(self):
+    def get_deembedding_sparameters(self):
         import numpy as np
         response = self._invoke(
             self._client.GetDeembeddingSparameters,

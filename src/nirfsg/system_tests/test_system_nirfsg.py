@@ -1,4 +1,5 @@
 import array
+import grpc
 import hightime
 import nirfsg
 import numpy as np
@@ -622,6 +623,8 @@ class SystemTests:
         with rfsg_device_session.initiate():
             rfsg_device_session.wait_until_settled()
 
+    # Re-enabled for 32-bit testing after gRPC device update
+    @pytest.mark.skipif(use_simulated_session is True, reason="Needs Updated gRPC device that supports get_all_named_waveform_names bug fix")
     def test_get_all_named_waveform_names(self, rfsg_device_session):
         rfsg_device_session.generation_mode = nirfsg.GenerationMode.ARB_WAVEFORM
         waveform_data1 = np.full(1000, 1 + 0j, dtype=np.complex128)
@@ -658,3 +661,19 @@ class TestLibrary(SystemTests):
     @pytest.fixture(scope='class')
     def session_creation_kwargs(self):
         return {}
+
+
+class TestGrpc(SystemTests):
+    @pytest.fixture(scope='class')
+    def grpc_channel(self):
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        config_file_path = os.path.join(current_directory, 'grpc_server_config.json')
+        with system_test_utilities.GrpcServerProcess(config_file_path) as proc:
+            channel = grpc.insecure_channel(f"localhost:{proc.server_port}")
+            yield channel
+
+    @pytest.fixture(scope='class')
+    def session_creation_kwargs(self, grpc_channel):
+        grpc_options = nirfsg.GrpcSessionOptions(grpc_channel, "")
+        return {'grpc_options': grpc_options}
+
